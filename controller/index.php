@@ -21,5 +21,5 @@ if_get('/', function ()
         echo "\n";
     }
 
-    return '';
+    exit;
 });
