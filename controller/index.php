@@ -23,3 +23,9 @@ if_get('/', function ()
 
     exit;
 });
+
+if_get('/public_ip', function ()
+{
+    echo ip();
+    exit;
+});
