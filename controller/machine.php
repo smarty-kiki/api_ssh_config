@@ -36,7 +36,7 @@ if_post('/machines', function ()
 {/*{{{*/
     $name = input('name');
     $register_key = input('register_key');
-    $public_ip = input('public_ip');
+    $public_ip = ip();
     $wlan_ip = input('wlan_ip');
 
     $machine = dao('machine')->find_by_register_key($register_key);
