@@ -1,0 +1,17 @@
+---
+display_name: 机器
+structs:
+  name:
+    type: name
+  register_key:
+    type: name
+    display_name: 注册码
+  public_ip:
+    type: ip
+    display_name: 公网IP
+  wlan_ip:
+    type: ip
+    display_name: 内网IP
+repeat_check_structs:
+  - register_key
+...

@@ -27,7 +27,6 @@ foreach ($entity_info['structs'] as $struct_name => $struct) {
 @foreach ($input_infos as $input_info)
     {{ $input_info }};
 @endforeach
-
 @if ($entity_info['repeat_check_structs'])
 @php
 $repeat_check_structs = $entity_info['repeat_check_structs'];
@@ -38,6 +37,7 @@ foreach ($repeat_check_structs as $struct_name) {
     $msg_infos[] = $entity_info['structs'][$struct_name]['display_name'];
 }
 @endphp
+
     $another_{{ $entity_name }} = dao('{{ $entity_name }}')->find_by_{{ implode('_and_', $repeat_check_structs) }}({{ implode(', ', $dao_param_infos) }});
     otherwise($another_{{ $entity_name }}->is_null(), '已经存在相同{{ implode('和', $msg_infos) }}的{{ $entity_info['display_name'] }} [ID: '.$another_{{ $entity_name }}->id.']');
 @endif

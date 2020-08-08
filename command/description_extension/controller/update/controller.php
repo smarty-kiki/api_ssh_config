@@ -6,7 +6,6 @@ if_post('/{{ english_word_pluralize($entity_name) }}/update/*', function (${{ $e
 
     ${{ $entity_name }} = dao('{{ $entity_name }}')->find(${{ $entity_name }}_id);
     otherwise(${{ $entity_name }}->is_not_null(), '{{ $entity_name }} not found');
-
 @if ($entity_info['repeat_check_structs'])
 @php
 $repeat_check_structs = $entity_info['repeat_check_structs'];
@@ -17,6 +16,7 @@ foreach ($repeat_check_structs as $struct_name) {
     $msg_infos[] = $entity_info['structs'][$struct_name]['display_name'];
 }
 @endphp
+
     $another_{{ $entity_name }} = dao('{{ $entity_name }}')->find_by_{{ implode('_and_', $repeat_check_structs) }}({{ implode(', ', $param_infos) }});
     otherwise($another_{{ $entity_name }}->is_null() || $another_{{ $entity_name }}->id === ${{ $entity_name }}->id, '已经存在相同{{ implode('和', $msg_infos) }}的{{ $entity_info['display_name'] }} [ID: '.$another_{{ $entity_name }}->id.']');
 @endif
