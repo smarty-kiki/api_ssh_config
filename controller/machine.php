@@ -32,61 +32,29 @@ if_get('/machines', function ()
     ];
 });/*}}}*/
 
-if_post('/machines/add', function ()
+if_post('/machines', function ()
 {/*{{{*/
     $name = input('name');
     $register_key = input('register_key');
     $public_ip = input('public_ip');
     $wlan_ip = input('wlan_ip');
 
-    $another_machine = dao('machine')->find_by_register_key($register_key);
-    otherwise($another_machine->is_null(), '已经存在相同注册码的机器 [ID: '.$another_machine->id.']');
+    $machine = dao('machine')->find_by_register_key($register_key);
 
-    $machine = machine::create(
-        $name,
-        $register_key,
-        $public_ip,
-        $wlan_ip
-    );
+    if ($machine->is_not_null()) {
 
-    return [
-        'code' => 0,
-        'msg' => '',
-    ];
-});/*}}}*/
+        $machine->name = $name;
+        $machine->public_ip = $public_ip;
+        $machine->wlan_ip = $wlan_ip;
+    } else {
 
-//todo::detail
-
-if_post('/machines/update/*', function ($machine_id)
-{/*{{{*/
-    $name = input('name');
-    $register_key = input('register_key');
-    $public_ip = input('public_ip');
-    $wlan_ip = input('wlan_ip');
-
-    $machine = dao('machine')->find($machine_id);
-    otherwise($machine->is_not_null(), 'machine not found');
-
-    $another_machine = dao('machine')->find_by_register_key($register_key);
-    otherwise($another_machine->is_null() || $another_machine->id === $machine->id, '已经存在相同注册码的机器 [ID: '.$another_machine->id.']');
-
-    $machine->name = $name;
-    $machine->register_key = $register_key;
-    $machine->public_ip = $public_ip;
-    $machine->wlan_ip = $wlan_ip;
-
-    return [
-        'code' => 0,
-        'msg' => '',
-    ];
-});/*}}}*/
-
-if_post('/machines/delete/*', function ($machine_id)
-{/*{{{*/
-    $machine = dao('machine')->find($machine_id);
-    otherwise($machine->is_not_null(), 'machine not found');
-
-    $machine->delete();
+        $machine = machine::create(
+            $name,
+            $register_key,
+            $public_ip,
+            $wlan_ip
+        );
+    }
 
     return [
         'code' => 0,
