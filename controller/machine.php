@@ -39,8 +39,6 @@ if_post('/machines', function ()
     $public_ip = ip();
     $wlan_ip = input('wlan_ip');
 
-    /**kiki*/error_log(strip_tags(print_r($_POST, true))."\n", 3, "/tmp/error_user.log");
-
     $machine = dao('machine')->find_by_register_key($register_key);
 
     if ($machine->is_not_null()) {
