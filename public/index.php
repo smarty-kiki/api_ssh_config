@@ -46,7 +46,6 @@ if_not_found(function () {
 // init controller
 include CONTROLLER_DIR.'/machine.php';
 include CONTROLLER_DIR.'/index.php';
-include CONTROLLER_DIR.'/calendar.php';
 
 // fix
 not_found();

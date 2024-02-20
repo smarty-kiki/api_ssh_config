@@ -4,6 +4,8 @@ if_get('/', function ()
 {
     $request_public_ip = ip();
 
+    $force_public = input('force_public', false);
+
     $config = config('ip');
 
     $machines = dao('machine')->find_all();
@@ -12,10 +14,10 @@ if_get('/', function ()
 
         echo $machine->name.' ';
 
-        if ($request_public_ip == $machine->public_ip) {
-            echo $machine->wlan_ip;
-        } else {
+        if ($force_public || $request_public_ip != $machine->public_ip) {
             echo $config['center_ip'];
+        } else {
+            echo $machine->wlan_ip;
         }
 
         echo "\n";
